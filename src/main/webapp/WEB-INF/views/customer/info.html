@@ -7,12 +7,22 @@
     <th:block th:replace="layout/head :: head-1"/>
 </head>
 <body>
-    <th:block th:replace="layout/header"/>
+    <div class="container">
+        <th:block th:replace="layout/header"/>
 
-    <div class="content">
-        <h1>Customer's info</h1>
+        <div class="content">
+            <h1>Customer's info</h1>
+            <br>
+            <div th:object="${customer}">
+                <h2 th:text="*{id}"></h2>
+                <h2 th:text="*{fullName}"></h2>
+                <h2 th:text="*{email}"></h2>
+                <h2 th:text="*{phone}"></h2>
+            </div>
+
+        </div>
+
+        <th:block th:replace="layout/footer"/>
     </div>
-
-    <th:block th:replace="layout/footer"/>
 </body>
 </html>
