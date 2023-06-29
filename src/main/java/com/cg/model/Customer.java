@@ -1,10 +1,24 @@
 package com.cg.model;
 
+
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "customers")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "full_name", nullable = false)
     private String fullName;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
     private String phone;
 
     public Customer() {

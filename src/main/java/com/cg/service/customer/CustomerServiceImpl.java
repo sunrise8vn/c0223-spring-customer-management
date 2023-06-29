@@ -1,49 +1,55 @@
 package com.cg.service.customer;
 
 import com.cg.model.Customer;
+import com.cg.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
+
+@Service
+@Transactional
 public class CustomerServiceImpl implements ICustomerService {
 
-    public static List<Customer> customers = new ArrayList<Customer>();
-    public static Long maxId = 1L;
-
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
-    public List<Customer> getAll() {
-        return customers;
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 
     @Override
-    public Customer getById(Long id) {
-        for (Customer customer : customers) {
-            if (customer.getId().equals(id)) {
-                return customer;
-            }
-        }
-        return null;
+    public Optional<Customer> findById(Long id) {
+        return customerRepository.findById(id);
     }
 
     @Override
-    public void add(Customer customer) {
-        customer.setId(maxId);
-        customers.add(customer);
-        maxId++;
+    public List<Customer> findAllByFullNameLike(String fullName) {
+        return customerRepository.findAllByFullNameLike(fullName);
+    }
+
+
+    @Override
+    public List<Customer> findAllByFullNameLikeOrEmailLikeOrPhoneLike(String fullName, String email, String phone) {
+        return customerRepository.findAllByFullNameLikeOrEmailLikeOrPhoneLike(fullName, email, phone);
     }
 
     @Override
-    public void update(Customer customer) {
-        int index = -1;
-        for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).getId().equals(customer.getId())) {
-                index = i;
-            }
-        }
+    public Customer save(Customer customer) {
+        return customerRepository.save(customer);
+    }
 
-        if (index > -1) {
-            customers.set(index, customer);
-        }
+    @Override
+    public void delete(Customer customer) {
+        customerRepository.delete(customer);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        customerRepository.deleteById(id);
     }
 }

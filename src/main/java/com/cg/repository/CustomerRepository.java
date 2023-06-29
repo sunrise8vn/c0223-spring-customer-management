@@ -1,12 +1,14 @@
-package com.cg.service.customer;
+package com.cg.repository;
 
 import com.cg.model.Customer;
-import com.cg.service.IGeneralService;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 
-public interface ICustomerService extends IGeneralService<Customer, Long> {
+@Repository
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     List<Customer> findAllByFullNameLike(String fullName);
 
